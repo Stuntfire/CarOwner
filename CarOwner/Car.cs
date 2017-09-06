@@ -50,7 +50,7 @@ namespace CarOwner
             //    this.Color = color;;
             //}
 
-            if (regNo.Length == 7)
+            if (!(regNo.Length == 7))
             {
                 throw new ArgumentOutOfRangeException("Nummerpladen skal være på præcis 7 tegn.");
             }
@@ -73,7 +73,7 @@ namespace CarOwner
         public string TjekNummerplade()
         {
             string temp = RegistrationNo;
-            if (RegistrationNo.Length == 7)
+            if (!(RegistrationNo.Length == 7))
             {
                 throw new ArgumentOutOfRangeException("Nummerpladen skal være på præcis 7 tegn.");
             }
