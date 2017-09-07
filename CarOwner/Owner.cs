@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CarOwner
@@ -12,6 +13,7 @@ namespace CarOwner
         public string Address { get; private set; }
         public string Name { get; set; }
         public string Phone { get; set; }
+        public List<Car> CarList { get; set; }
 
         public Owner(string adr, string name, string phone)
         {
@@ -37,10 +39,16 @@ namespace CarOwner
             {
                 throw new ArgumentOutOfRangeException("Telefonnummer skal være på præcis 8 tegn.");
             }
+            if (phone.All(char.IsLetter))
+            {
+                throw new FormatException("Telefonnummer må ikke bestå af bogstaver.");
+            }
             else
             {
                 this.Phone = phone;
             }
+
+            CarList = new List<Car>();
         }
 
 
@@ -68,9 +76,13 @@ namespace CarOwner
         public string TjekTelefon()
         {
             string temp = Phone;
+            if (Phone.All(char.IsLetter))
+            {
+                throw new FormatException("Telefonnummer må ikke bestå af bogstaver.");
+            }
             if (!(Phone.Length == 8))
             {
-                throw new ArgumentOutOfRangeException("Telefonnummer skal være på præcis 8 tegn.");
+                throw new ArgumentOutOfRangeException("Telefonnummer skal bestå af 8 tal.");
             }
             return temp;
         }

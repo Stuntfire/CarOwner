@@ -4,24 +4,21 @@ using System.Text;
 
 namespace CarOwner
 {
+    public enum CarColor { Black, White, Gray, Red, Green, Blue };
     public class Car
     {
         /// <summary>
         /// Car klassen bruges til at instanciere car-objekter der skal indeholde antal døre, bilmodel, farve og nummerplade.
         /// </summary>
         //Props
+        
         public int Doors { get; set; }
         public string Model { get; set; }
-        public Enum Color { get; set; }
+        public CarColor Color { get; set; }
         public string RegistrationNo { get; set; }
 
-
-        enum CarColor { Black, White, Gray, Red, Green, Blue };
-
-
-
         //Constructor
-        public Car(int door, string model, /*Enum color,*/ string regNo)
+        public Car(int door, string model, string regNo, CarColor _carcolor)
         {
             if (door <= 1 || door >= 6)
             {
@@ -41,15 +38,6 @@ namespace CarOwner
                 this.Model = model;
             }
 
-            //if (CarColor == "")
-            //{
-            //    throw new ArgumentException("Husk at indtaste en bilmodel.");
-            //}
-            //else
-            //{
-            //    this.Color = color;;
-            //}
-
             if (!(regNo.Length == 7))
             {
                 throw new ArgumentOutOfRangeException("Nummerpladen skal være på præcis 7 tegn.");
@@ -57,6 +45,41 @@ namespace CarOwner
             else
             {
                 this.RegistrationNo = regNo;
+            }
+
+            CheckCarColor(_carcolor);
+
+        }
+
+        private void CheckCarColor(CarColor _carcolor)
+        {
+            if (_carcolor != CarColor.Black)
+            {
+                throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            }
+            //else if (_carcolor != CarColor.Blue)
+            //{
+            //    throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            //}
+            //else if (_carcolor != CarColor.Gray)
+            //{
+            //    throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            //}
+            //else if (_carcolor != CarColor.Green)
+            //{
+            //    throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            //}
+            //else if (_carcolor != CarColor.Red)
+            //{
+            //    throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            //}
+            //else if (_carcolor != CarColor.White)
+            //{
+            //    throw new ArgumentOutOfRangeException("Bilens farve skal være enten: Black, White, Gray, Red, Green eller Blue.");
+            //}
+            else
+            {
+                this.Color = _carcolor;
             }
         }
 
