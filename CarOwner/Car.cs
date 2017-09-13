@@ -12,24 +12,51 @@ namespace CarOwner
         /// </summary>
         //Props
         
-        public int Doors { get; set; }
-        public string Model { get; set; }
+        private int _doors;
+        public int Doors
+        {
+            get { return _doors; }
+            private set
+            {
+                if (value <= 1 || value >= 6)
+                {
+                    throw new ArgumentOutOfRangeException("Antal døre skal være mellem 2 og 5.");
+                }
+            }
+        }
+
+        private string _model;
+        public string Model
+        {
+            get { return _model; }
+            private set {
+                if (value == "" || value.Length == 0 || value == null)
+                {
+                    throw new ArgumentException("Husk at indtaste en bilmodel.");
+                }
+            }
+        }
+
         public CarColor Color { get; set; }
         public string RegistrationNo { get; set; }
+
+        private Owner _carOwner;   
+
+        public Owner CarOwner
+        {
+            get { return _carOwner; }
+            set { _carOwner = value; }
+        }
+
+
 
         //Constructor
         public Car(int door, string model, string regNo, CarColor _carcolor)
         {
-            if (door <= 1 || door >= 6)
-            {
-                throw new ArgumentOutOfRangeException("Antal døre skal være mellem 2 og 5.");
-            }
-            else
-            {
-                this.Doors = door;
-            }
+            this.Doors = door;
+            
 
-            if (model == "")
+            if (model == "" || model.Length == 0 || model == null)
             {
                 throw new ArgumentException("Husk at indtaste en bilmodel.");
             }
@@ -83,7 +110,7 @@ namespace CarOwner
             }
         }
 
-        public int TjekDoors()
+        private int TjekDoors()
         {
             int temp = Doors;
             if (Doors <= 1 || Doors >= 6)
@@ -93,7 +120,7 @@ namespace CarOwner
             return temp;
         }
 
-        public string TjekNummerplade()
+        private string TjekNummerplade()
         {
             string temp = RegistrationNo;
             if (!(RegistrationNo.Length == 7))
@@ -103,7 +130,7 @@ namespace CarOwner
             return temp;
         }
 
-        public string TjekBilModel()
+        private string TjekBilModel()
         {
             string temp = Model;
 

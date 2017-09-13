@@ -93,18 +93,6 @@ namespace UnitTestOwner
             Assert.AreEqual("12345678", navn);
         }
 
-        [TestMethod]
-        public void TestTelefonBogstaver()
-        {
-            //Arrange
-            var testOwner = new Owner("Broholm 45", "Oscar", "12345678");
-
-            //Act
-            string navn = testOwner.TjekTelefon();
-
-            //Assert
-            Assert.AreEqual("12345678", navn);
-        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -134,6 +122,17 @@ namespace UnitTestOwner
         {
             //Arrange
             var testOwner = new Owner("Broholm 45", "Oscar", "Abcdefgh");
+
+            //Act
+            string navn = testOwner.TjekTelefon();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTelefonForMereEnd_8_Bogstaver()
+        {
+            //Arrange
+            var testOwner = new Owner("Broholm 45", "Oscar", "Abcdefghi");
 
             //Act
             string navn = testOwner.TjekTelefon();

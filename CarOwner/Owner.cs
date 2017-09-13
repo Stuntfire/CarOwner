@@ -52,7 +52,7 @@ namespace CarOwner
         }
 
 
-        public string TjekAdresse()
+        private string TjekAdresse()
         {
             string temp = Address;
 
@@ -63,7 +63,7 @@ namespace CarOwner
             return temp;
         }
 
-        public string TjekNavn()
+        private string TjekNavn()
         {
             string temp = Name;
             if (Name.Length < 4)
@@ -73,10 +73,10 @@ namespace CarOwner
             return temp;
         }
 
-        public string TjekTelefon()
+        private string TjekTelefon()
         {
             string temp = Phone;
-            if (Phone.All(char.IsLetter))
+            if (Phone.Any(char.IsLetter))
             {
                 throw new FormatException("Telefonnummer må ikke bestå af bogstaver.");
             }
