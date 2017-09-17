@@ -22,11 +22,44 @@ namespace UnitTestOwner
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void AdresseTestForAntalTegn()
+        [ExpectedException(typeof(AddressException))]
+        public void AdresseTestFor_0_Tegn()
         {
             //Arrange
             var testOwner = new Owner("", "Oscar", "12345678");
+
+            //Act
+            string antalTegn = testOwner.TjekAdresse();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(AddressException))]
+        public void AdresseTestFor_6_Tal()
+        {
+            //Arrange
+            var testOwner = new Owner("123456", "Oscar", "12345678");
+
+            //Act
+            string antalTegn = testOwner.TjekAdresse();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(AddressException))]
+        public void AdresseTestFor_6_Bogstaver()
+        {
+            //Arrange
+            var testOwner = new Owner("123456", "Oscar", "Abcdef");
+
+            //Act
+            string antalTegn = testOwner.TjekAdresse();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(AddressException))]
+        public void AdresseTestFor_6_BogstaverOgTal()
+        {
+            //Arrange
+            var testOwner = new Owner("123456", "Oscar", "Abc123");
 
             //Act
             string antalTegn = testOwner.TjekAdresse();
@@ -49,17 +82,17 @@ namespace UnitTestOwner
         public void TestNavneMatch2()
         {
             //Arrange
-            var testOwner = new Owner("Broholm 45", "Otto", "12345678");
+            var testOwner = new Owner("Broholm 45", "Helle-Helle", "12345678");
 
             //Act
             string navn = testOwner.TjekNavn();
 
             //Assert
-            Assert.AreEqual("Otto", navn);
+            Assert.AreEqual("Helle-Helle", navn);
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(NameException))]
         public void NavnTestForAntalTegn()
         {
             //Arrange
@@ -70,11 +103,11 @@ namespace UnitTestOwner
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(NameException))]
         public void NavnTestForAntalTegn2()
         {
             //Arrange
-            var testOwner = new Owner("Broholm 45", "Abc", "12345678");
+            var testOwner = new Owner("Broholm 45", "Abcd", "12345678");
 
             //Act
             string antalTegn = testOwner.TjekNavn();
@@ -95,7 +128,7 @@ namespace UnitTestOwner
 
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(PhoneException))]
         public void TestTelefonForAntalTegn()
         {
             //Arrange
@@ -106,7 +139,7 @@ namespace UnitTestOwner
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(PhoneException))]
         public void TestTelefonForAntalTegn2()
         {
             //Arrange
@@ -117,8 +150,8 @@ namespace UnitTestOwner
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FormatException))]
-        public void TestTelefonForBogstaver()
+        [ExpectedException(typeof(PhoneException))]
+        public void TestTelefonFor_8_Bogstaver()
         {
             //Arrange
             var testOwner = new Owner("Broholm 45", "Oscar", "Abcdefgh");
@@ -128,7 +161,18 @@ namespace UnitTestOwner
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(PhoneException))]
+        public void TestTelefonForMindreEnd_8_Bogstaver()
+        {
+            //Arrange
+            var testOwner = new Owner("Broholm 45", "Oscar", "Abcdefg");
+
+            //Act
+            string navn = testOwner.TjekTelefon();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PhoneException))]
         public void TestTelefonForMereEnd_8_Bogstaver()
         {
             //Arrange

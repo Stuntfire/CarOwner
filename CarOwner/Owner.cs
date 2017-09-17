@@ -10,81 +10,96 @@ namespace CarOwner
         /// <summary>
         /// Denne klasse laver en Bilejer, der skal indeholde et navn, adresse og telefonnummer.
         /// </summary>
-        public string Address { get; private set; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            private set {
+                if (value.Length <= 6)
+                {
+                    throw new AddressException("Adressen skal være længere end 6 tegn.");
+                }
+                address = value; }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set {
+                if (value.Length <= 4)
+                {
+                    throw new NameException("Navn skal være længere end 4 tegn.");
+                }
+                name = value; }
+        }
+
+        private string phone;
+        public string Phone
+        {
+            get { return phone; }
+            set {
+                if (!(value.Length == 8))
+                {
+                    throw new PhoneException("Telefonnummer skal være på præcis 8 tegn.");
+                }
+                if (value.All(char.IsLetter))
+                {
+                    throw new PhoneException("Telefonnummer må ikke bestå af bogstaver.");
+                }
+                phone = value; }
+        }
+
         public List<Car> CarList { get; set; }
 
-        public Owner(string adr, string name, string phone)
+        //Owner-klassens Constructor
+        public Owner(string a, string n, string p)
         {
-            if (adr.Length < 6)
+            this.Address = a;
+            this.Name = n;
+            this.Phone = p;
+
+            //CarList = new List<Car>();
+        }
+
+        //metode der tjekker om adressen er kortere end 6 tegn.
+        public string TjekAdresse()
+        {
+            if (!(Address.Length <= 6))
             {
-                throw new ArgumentOutOfRangeException("Adressen skal være længere end 6 tegn.");
+                return Address;
             }
             else
             {
-                this.Address = adr; // overvej hvad der sker hvis adr ændres til 2 tegn efterfølgende...
+                throw new AddressException("Adressen skal være længere end 6 tegn.");
             }
+        }
 
-            if (name.Length < 4)
+        //metode der tjekker om navnet er kortere end 4 tegn.
+        public string TjekNavn()
+        {
+            if (!(Name.Length <= 4))
             {
-                throw new ArgumentOutOfRangeException("Navn skal være længere end 4 tegn.");
+                return Name;
             }
             else
             {
-                this.Name = name;
+                throw new NameException("Navn skal være længere end 4 tegn.");
             }
-
-            if (!(phone.Length == 8))
-            {
-                throw new ArgumentOutOfRangeException("Telefonnummer skal være på præcis 8 tegn.");
-            }
-            if (phone.All(char.IsLetter))
-            {
-                throw new FormatException("Telefonnummer må ikke bestå af bogstaver.");
-            }
-            else
-            {
-                this.Phone = phone;
-            }
-
-            CarList = new List<Car>();
         }
 
-
-        private string TjekAdresse()
+        //metode der tjekker om telefonnummeret indeholder bogstaver og/eller er præcis 8 tegn.
+        public string TjekTelefon()
         {
-            string temp = Address;
-
-            if (Address.Length < 6)
-            {
-                throw new ArgumentOutOfRangeException("Adressen skal være længere end 6 tegn.");
-            }
-            return temp;
-        }
-
-        private string TjekNavn()
-        {
-            string temp = Name;
-            if (Name.Length < 4)
-            {
-                throw new ArgumentOutOfRangeException("Navn skal være længere end 4 tegn.");
-            }
-            return temp;
-        }
-
-        private string TjekTelefon()
-        {
-            string temp = Phone;
             if (Phone.Any(char.IsLetter))
             {
-                throw new FormatException("Telefonnummer må ikke bestå af bogstaver.");
+                throw new PhoneException("Telefonnummer må ikke bestå af bogstaver.");
             }
             if (!(Phone.Length == 8))
             {
-                throw new ArgumentOutOfRangeException("Telefonnummer skal bestå af 8 tal.");
+                throw new PhoneException("Telefonnummer skal bestå af 8 tal.");
             }
-            return temp;
+            return Phone;
         }
     }
 }
